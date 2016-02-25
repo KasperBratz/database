@@ -1,0 +1,9 @@
+Orders(!OrderNbr,DeliveryTime, CustomerName);
+Customer(!Name,Address);
+Pallets(!PalletNbr, ProductName, TimeMade, \OrderNbr);
+Blocked(!\PalletNbr);
+Delivered(!PalletNbr, \CustomerName, DeliveryTime);
+RawMaterials(!RawMaterial, Amount, LastDeliveryDate, LastDeliveryAmount);
+Cookies(!NaPallets(PalletNbr, ProductName, TimeMade, OrderNbr);
+me);
+Recipe(!\RawMaterial, !\CookieName, Amount);
