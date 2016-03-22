@@ -64,17 +64,17 @@ insert into Cookies values("Tango");
 
 
 insert into RawMaterials values("Flour", 270000, '2016-03-03',10000);
-insert into RawMaterials values("Suger", 20000, '2016-03-03', 600);
+insert into RawMaterials values("Sugar", 20000, '2016-03-03', 600);
 insert into RawMaterials values("Egg", 1000, '2016-03-03',500);
 
 insert into Recipe values("Tango", "Flour", 270);
-insert into Recipe values("Tango", "Suger", 200);
+insert into Recipe values("Tango", "Sugar", 200);
 insert into Recipe values("Tango", "Egg", 10);
 
 insert into Recipe values("Ballerina", "Flour", 200);
-insert into Recipe values("Ballerina", "Suger", 170);
+insert into Recipe values("Ballerina", "Sugar", 170);
 insert into Recipe values("Ballerina", "Egg", 8);
 
 insert into Recipe values("Amneris", "Flour", 180);
-insert into Recipe values("Amneris", "Suger", 100);
+insert into Recipe values("Amneris", "Sugar", 100);
 insert into Recipe values("Amneris", "Egg", 12);
