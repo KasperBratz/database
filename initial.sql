@@ -14,10 +14,11 @@ create table Customers(
 );
 
 create table Orders(
-	orderNbr int primary key,
+	orderNbr int not null auto_increment,
 	deliveryTime date,
 	customerName varChar(255),
 	delivered boolean,
+	primary key(orderNbr),
 	foreign key (customerName) references Customers(name)
 );
 
@@ -44,12 +45,13 @@ create table Recipe(
 );
 
 create table Pallets(
-	palletNbr int primary key,
+	palletNbr int not null auto_increment,
 	timeMade date,
 	orderNbr int,
 	cookieName varChar(255),
 	blocked boolean,
 	sent boolean,
+	primary key(palletNbr),
 	foreign key (orderNbr) references Orders(orderNbr),
 	foreign key (cookieName) references Cookies(cookieName)
 );
@@ -63,9 +65,9 @@ insert into Cookies values("Ballerina");
 insert into Cookies values("Tango");
 
 
-insert into RawMaterials values("Flour", 270000, '2016-03-03',10000);
-insert into RawMaterials values("Sugar", 20000, '2016-03-03', 600);
-insert into RawMaterials values("Egg", 1000, '2016-03-03',500);
+insert into RawMaterials values("Flour", 270000000, '2016-03-03',10000);
+insert into RawMaterials values("Sugar", 20000000, '2016-03-03', 600);
+insert into RawMaterials values("Egg", 1000000, '2016-03-03',500);
 
 insert into Recipe values("Tango", "Flour", 270);
 insert into Recipe values("Tango", "Sugar", 200);

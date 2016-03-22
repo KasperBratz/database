@@ -8,17 +8,8 @@
 		header("Location: cannotConnect.html");
 		exit();
 	}
-	
-	$userId = $_REQUEST['userId'];
-	if (!$db->userExists($userId)) {
-		$db->closeConnection();
-		header("Location: noSuchUser.html");
-		exit();
-	}
 	$db->closeConnection();
-	
 	session_start();
 	$_SESSION['db'] = $db;
-	$_SESSION['userId'] = $userId;
-	header("Location: booking1.php");
+	header("Location: startPage.php");
 ?>

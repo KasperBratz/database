@@ -102,24 +102,73 @@ class Database {
 		return $result;
 	}
 
-	/**
-	 * Check if a user with the specified user id exists in the database.
-	 * Queries the Users database table.
-	 *
-	 * @param userId The user id
-	 * @return true if the user exists, false otherwise.
-	 */
-	public function userExists($userId) {
-		$sql = "select username from Users where username = ?";
-		$result = $this->executeQuery($sql, array($userId));
-		return count($result) == 1;
-	}
 
-	public function getMovieNames(){
-		$sql = "select moviename from movies";
+	public function getCookies(){
+		$sql = "select cookieName from Cookies";
 		$result = $this->executeQuery($sql);
 		return $result;
 	}
+
+
+	public function bakeCookies($cookieName,$amount){
+		$sqlRecipe = "select ingredient,amount from recipe where cookieName = ?";
+		$sqlUpdate = "update RawMaterials set amount = amount - ? where name = ?";
+		$sqlInserPallet = "insert into Pallets (timeMade, orderNbr, cookieName, blocked, sent) values(CURDATE(),NULL,?,False,False)";
+
+
+		$resultCookies = $this->executeQuery($sqlRecipe, array($cookieName));
+
+		foreach($resultCookies as $row){
+			$this->executeUpdate($sqlUpdate,array($amount*$row[amount],$row[ingredient]));
+		}
+
+		for($i =0; $i < $amount; $i++){
+			$this->executeUpdate($sqlInserPallet,array($cookieName));
+		}
+
+		return true;
+
+	}
+
+	public function blockPallets($cookieName, $minTime, $maxTime){
+		$sqlPallets = "select palletNbr from Pallets where timeMade between ? and ? and cookieName = ? and blocked = false";
+		$sqlUpdate = "update Pallets set blocked = true where palletNbr = ?";
+
+		$resultPallets = $this -> executeQuery($sqlPallets, array($minTime, $maxTime, $cookieName));
+		$count = 0;
+		foreach($resultPallets as $row){
+			$count += $this->executeUpdate($sqlUpdate,array($row[palletNbr]));
+		}
+		return $count;
+
+	}
+
+	public function getBlockedCookies(){
+		$sql = "select distinct cookieName from pallets where blocked = true";
+		return $this -> executeQuery($sql);
+	}
+
+	public function getBlockedPalletsByName($cookieName){
+		$sql = "select palletNbr from pallets where cookieName = ? and sent = false and blocked = true";
+		return $this -> executeQuery($sql,array($cookieName));
+	}
+
+	public function searchByPnbr($palletNbr){
+		$sql = "select * from Pallets where palletNbr = ?";
+		return $this -> executeQuery($sql,array($palletNbr));
+	}
+
+
+	public function getPalletsByName($cookieName){
+		$sql = "select palletNbr from pallets where cookieName = ? and sent = false";
+		return $this -> executeQuery($sql,array($cookieName));
+	}
+
+	public function getPalletsByInterval($min,$max){
+		$sql = "select palletNbr from pallets where timeMade between ? and ?";
+		return $this->executeQuery($sql,array($min,$max));
+	}
+
 
 	public function getPerformances($moviename){
 		$sql = "select performanceDate from performances where moviename = ?";
