@@ -6,5 +6,7 @@ Pallets(!PalletNbr, TimeMade, \OrderNbr, Blocked, \cookieName, Sent);
 
 
 Cookies(!Name);
+
 Recipe(!\RawMaterial, !\CookieName, Amount);
+
 RawMaterials(!RawMaterial, Amount, LastDeliveryDate, LastDeliveryAmount);
