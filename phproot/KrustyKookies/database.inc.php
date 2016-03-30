@@ -113,7 +113,7 @@ class Database {
 	public function bakeCookies($cookieName,$amount){
 		$sqlRecipe = "select ingredient,amount from recipe where cookieName = ?";
 		$sqlUpdate = "update RawMaterials set amount = amount - ? where name = ?";
-		$sqlInserPallet = "insert into Pallets (timeMade, orderNbr, cookieName, blocked, sent) values(CURDATE(),NULL,?,False,False)";
+		$sqlInserPallet = "insert into Pallets (timeMade, orderNbr, cookieName, blocked, sent,sentDate) values(CURDATE(),NULL,?,False,False,NULL)";
 
 
 		$resultCookies = $this->executeQuery($sqlRecipe, array($cookieName));
@@ -170,48 +170,19 @@ class Database {
 	}
 
 
-	public function getPerformances($moviename){
-		$sql = "select performanceDate from performances where moviename = ?";
-		$result = $this->executeQuery($sql, array($moviename));
-		return $result;
 
-	}
-
-	
-
-	public function getPerformanceInfo($movieName,$performanceDate){
-		$sql = "select * from performances where moviename = ? and performanceDate = ?";
-		$result = $this->executeQuery($sql, array($movieName, $performanceDate));
+	public function getPalletsByCustomer($customerName){
+		$sql = "select palletNbr from Orders,pallets where pallets.orderNbr = Orders.orderNbr and customerName = ? ";
+		$result = $this -> executeQuery($sql, array($customerName));
 		return $result;
 	}
 
-	
-	public function bookTicket($userId,$movieName,$performanceDate){
 
-		$sql = "select freeSeats from performances where moviename = ? and performanceDate = ? for update";
-		$newReserv = "insert into Reservations(username,performanceDate,movieName) values(?,?,?)";
-		$decSeats = "update Performances set freeSeats = freeSeats -1 where movieName = ? and performanceDate = ?";
-		$this->conn->beginTransaction();
-		$result = $this->executeQuery($sql, array($movieName, $performanceDate));
-		
-		foreach ($result as $row) {
-			if($row[freeSeats]==0){
-				$this->conn->rollback();
-				return -1;
-			}else{
-				$this->executeUpdate($decSeats,array($movieName,$performanceDate));
-				$this->executeUpdate($newReserv,array($userId,$performanceDate,$movieName));
-				$reservNbr = $this->conn->lastInsertId();
-				$this->conn->commit();
-			}
-		}
-
-
-		return $reservNbr;
+	public function findNameFromOrder($palletNbr){
+		$sql = "select customerName from Orders,pallets where pallets.orderNbr = Orders.orderNbr and palletNbr = ?";
+		$result = $this ->executeQuery($sql, array($palletNbr));
+		return $result;
 	}
 
-	/*
-	 * *** Add functions ***
-	 */
 }
 ?>

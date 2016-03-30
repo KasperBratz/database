@@ -51,6 +51,7 @@ create table Pallets(
 	cookieName varChar(255),
 	blocked boolean,
 	sent boolean,
+	sentDate datetime,
 	primary key(palletNbr),
 	foreign key (orderNbr) references Orders(orderNbr),
 	foreign key (cookieName) references Cookies(cookieName)
@@ -60,10 +61,14 @@ insert into Customers values("Finkakor AB", "Helsingborg");
 insert into Customers values("Småbröd AB", "Malmö");
 insert into Customers values("Partybröd AB", "Månen");
 
+
 insert into Cookies values("Amneris");
 insert into Cookies values("Ballerina");
 insert into Cookies values("Tango");
 
+insert into Orders(deliveryTime,customerName,delivered) values  ('2016-04-01' ,"Småbröd AB", true);
+
+insert into Pallets(timeMade,orderNbr,cookieName,blocked,sent,sentDate) values ('2016-04-01', 1, "Tango", false, true, '2016-04-10 22:01:02');
 
 insert into RawMaterials values("Flour", 270000000, '2016-03-03',10000);
 insert into RawMaterials values("Sugar", 20000000, '2016-03-03', 600);

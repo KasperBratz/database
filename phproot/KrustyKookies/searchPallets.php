@@ -21,6 +21,10 @@
 		<input type=submit value="Blocked products">
 		
 	</form>
+	<form method=post action="searchCustomer.php">
+		<input type=submit value="Customer name">
+		<input type = "text" size = "10" name="customerName">
+	</form>
 	
 
 </body>
