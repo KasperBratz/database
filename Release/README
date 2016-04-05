@@ -1,0 +1,8 @@
+To test do the following:
+
+1. Unzip Krusty.zip.
+2. Follow instructions in pdf to start the program.
+3. The default database is prepared with entrys for testing the system.
+   3a). If you want to use your own database, edit phproot/KrustyKookies/mysql_connect_data.inc.php with your own database information
+   3b). run "source setup.sql" on your mysql database.
+4. Klick the button you want to test, have fun!

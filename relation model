@@ -1,12 +1,12 @@
-Customer(!Name,Address);
+Customers(!Name,Address);
 
 Orders(!OrderNbr, DeliveryTime, \CustomerName, Delivered);
 
-Pallets(!PalletNbr, TimeMade, \OrderNbr, Blocked, \cookieName, Sent);
+Pallets(!PalletNbr, TimeMade, \OrderNbr, Blocked, \cookieName, Sent, SentDate);
 
+Cookies(!CookieName);
 
-Cookies(!Name);
+Recipe(!\Ingredient, !\CookieName, Amount);
 
-Recipe(!\RawMaterial, !\CookieName, Amount);
+RawMaterials(!Name, Amount, LastDeliveryDate, LastDeliveryAmount);
 
-RawMaterials(!RawMaterial, Amount, LastDeliveryDate, LastDeliveryAmount);
